@@ -5,7 +5,18 @@ import java.util.Scanner;
 public class Account {
     private String username;
 
-    public Account(String requestedName) throws FileNotFoundException {}
+    public Account(String requestedName) throws FileNotFoundException {
+        if (isAvailable(requestedName)) {
+            username = requestedName;
+        } else {
+            throw new FileNotFoundException("Username not available");
+        }
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
     public static boolean isAvailable(String str) throws FileNotFoundException {
         File f = new File("usernames.txt");
         java.util.Scanner s = new Scanner(f);
