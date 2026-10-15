@@ -6,10 +6,12 @@ public class Account {
     private String username;
 
     public Account(String requestedName) throws FileNotFoundException {
-        if (isAvailable(requestedName)) {
-            username = requestedName;
-        } else {
-            throw new FileNotFoundException("Username not available");
+        int num = 1;
+        String possibleName = requestedName;
+        while (!isAvailable(possibleName)) {
+            possibleName = requestedName + num;
+            num++;
+            username = possibleName;
         }
     }
 
@@ -25,6 +27,16 @@ public class Account {
                 return false;
         }
         return true;
+    }
+
+    public String getShortenedName() {
+        String shortName = username;
+        int hyphen = shortName.indexOf("-");
+        while (hyphen > 0) {
+            shortName = shortName.substring(0, hyphen-1) + shortName.substring(hyphen+1);
+            hyphen = shortName.indexOf("-");
+        }
+        return shortName;
     }
 }
 
